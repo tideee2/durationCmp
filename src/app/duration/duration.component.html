@@ -1,0 +1,5 @@
+<form [formGroup]="form" >
+  <input type="number" formControlName="hours"   (change)="changeField($event)" #hours>
+  <input type="number" formControlName="minutes" (change)="changeField($event)" #minutes>
+  <input type="number" formControlName="seconds" (change)="changeField($event)" #seconds>
+</form>
