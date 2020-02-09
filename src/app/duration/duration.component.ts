@@ -42,6 +42,7 @@ export class DurationComponent implements OnInit, ControlValueAccessor {
         seconds: this.fb.control(0, [])
       }
     );
+    this.form.valueChanges.subscribe(this.calculateTime.bind(this));
   }
 
   onChange: any = () => {};
@@ -62,27 +63,14 @@ export class DurationComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value: any): void {
     this.value = value;
-    console.log(value);
   }
 
   changeField($event: Event, element) {
     $event.preventDefault();
-    const hours = Math.floor(this.value / 3600);
-    const minutes = Math.floor((this.value - hours * 3600) / 60);
-    const seconds = Math.floor(this.value - hours * 3600 - minutes / 60);
-    if (element === 'hours') {
-      this.value = this.value - hours * 3600 + this.hours;
-    }
-    if (element === 'minutes') {
-      this.value = this.value - minutes * 60 + this.minutes;
-    }
-    if (element === 'seconds') {
-      this.value = this.value - seconds + this.seconds;
-    }
-    this.onChange(this.value);
   }
 
-  detectFieldType(element: string) {
-
+  calculateTime({hours = 0, minutes = 0, seconds = 0}) {
+    const calcTime = hours * 3600 + minutes * 60 + seconds;
+    this.onChange(calcTime);
   }
 }
